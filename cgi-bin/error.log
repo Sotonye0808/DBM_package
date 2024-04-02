@@ -1,0 +1,2 @@
+C:\Apache24\htdocs\Sotonye_DBM_project\Python_works\DBM_package\cgi-bin\tabCRUD.py:5: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+  import cgi

@@ -1,0 +1,399 @@
+/* Reset styles for elements */
+body, h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Default styles for the body */
+body {
+    font-family: Arial, sans-serif;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    transition: all ease 1s;
+}
+:root{
+    --primary-color:#fff;
+    --secondary-color:#000;
+    --tertiary-color: #f0f0f0;
+}
+
+.darks{
+    --primary-color:#000;
+    --secondary-color: #f0f0f0;
+    --tertiary-color: #999;
+    transition: all ease 1s;
+}
+
+/* Styles for the header */
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+}
+
+/* Styles for the container */
+.container {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--secondary-color);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+.themeChange button{
+    border: none;
+    background: none;
+    position: fixed;
+    top: 10%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--secondary-color);
+}
+.themeChange button:hover{
+    cursor: pointer;
+    font-weight: bolder;
+    transition: all ease .2s;
+    text-decoration: underline;
+}
+a{
+    position: relative;
+    right: -50%;
+    transform: translate(-50%, -50%);
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+a:hover{
+    cursor: pointer;
+    transition: all ease .2s;
+    text-decoration: underline;
+}
+img{
+    width: 40px;
+    height: 40px;
+}
+.dbForm{
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+/* Styles for the database methods */
+.dbMethods {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--secondary-color);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styles for the table methods */
+.tabMethods {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--secondary-color);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styles for the data methods */
+.dataMethods {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--secondary-color);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styles for form groups */
+.form-group {
+    max-width: 768px;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"], textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+input[type="number"], select, option{
+    border: 1px solid var(--secondary-color);
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+input[type="checkbox"]:hover{
+cursor: pointer;
+}
+
+/* Styles for buttons */
+.button {
+    background-color: #4CAF50; /* Green */
+    color: lavender;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button:hover {
+    background-color: lavender;
+    color: #4CAF50;
+}
+
+/* Styles for scrollable div */
+.scrollable {
+    overflow-x: auto;
+    white-space: nowrap;
+    overflow-y: auto;
+    max-height: 300px;
+    max-width: 768px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Scrollbar style */
+.scrollable::-webkit-scrollbar, .modal-content::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollable::-webkit-scrollbar-thumb, .modal-content::-webkit-scrollbar-thumb {
+    background-color: #888;
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover, .modal-content::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Default modal content style */
+.modal-content {
+    background-color: var(--primary-color);
+    width: 500px;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px var(--secondary-color);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 100vh;
+}
+
+/* Table style */
+.response-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.response-table th,
+.response-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+/* Table header style */
+.response-column-header {
+    background-color: var(--tertiary-color);
+    font-weight: bold;
+}
+
+/* Table data style */
+.response-column-data {
+    text-align: center;
+    font-weight: normal;
+}
+
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    /* Styles for small screens (e.g., smartphones) */
+    .container{
+        max-width: 100vw;
+        flex-wrap: wrap;
+    }
+    .dataMethods, .dbMethods, .tabMethods{
+        max-width: 100vw;
+        flex-wrap: wrap;
+    }
+    .container {
+        padding: 5%;
+    }
+    .dbForm{
+        width: 100%;
+    }
+    .form-group {
+        max-width: 100vw;
+        margin-bottom: 5%;
+    }
+    label {
+        font-size: 14px;
+    }
+    input[type="text"],
+    input[type="password"] {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .button {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+    .modal-content{
+        width: 60%;
+    }
+    .scrollable {
+        max-width: 100vw;
+        font-size: 12px;
+        max-height: 300px;
+        overflow-x: auto;
+        white-space: nowrap;
+        overflow-y: auto;
+    }
+}
+
+@media (max-width: 350px) {
+    /* Styles for screens with a maximum width of 450px (e.g., small smartphones) */
+    .container {
+        padding: 3%;
+        max-width: 100vw;
+        flex-wrap: wrap;
+    }
+    .dbForm{
+        width: 100%;
+    }
+    .dataMethods, .dbMethods, .tabMethods{
+        max-width: 100vw;
+        flex-wrap: wrap;
+    }
+    
+    .tabMethods{
+        padding: 2px;
+    }
+    .form-group {
+        max-width: 100vw;
+        margin-bottom: 3%;
+    }
+    label {
+        font-size: 12px;
+    }
+    input[type="text"],
+    input[type="password"] {
+        font-size: 12px;
+        padding: 8px;
+    }
+    .button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+    .modal-content {
+        width: 80%;
+    }
+    .scrollable {
+        overflow-x: auto;
+        white-space: nowrap;
+        overflow-y: auto;
+        font-size: 10px;
+        max-height: 250px;
+        max-width: 100vw;
+    }
+}
+
+@media (max-width: 180px) {
+    /* Styles for screens with a maximum width of 250px (e.g., very small screens) */
+    .container {
+        padding: 2%;
+        max-width: 100vw;
+        flex-wrap: wrap;
+    }
+    .dbForm{
+        width: 100%;
+    }
+    .dataMethods, .dbMethods, .tabMethods{
+        max-width: 100vw;
+        flex-wrap: wrap;
+    }
+    .tabMethods{
+        padding: 1px;
+    }
+    .form-group {
+        max-width: 100vw;
+        margin-bottom: 2%;
+    }
+    label {
+        font-size: 10px;
+    }
+    input[type="text"],
+    input[type="password"] {
+        font-size: 10px;
+        padding: 6px;
+    }
+    .button {
+        font-size: 12px;
+        padding: 3px 6px;
+    }
+    .modal-content {
+        width: 90%;
+    }
+    .scrollable {
+        overflow-x: auto;
+        white-space: nowrap;
+        overflow-y: auto;
+        font-size: 8px;
+        max-height: 200px;
+        max-width: 100vw;
+    }
+}

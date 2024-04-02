@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Operations</title>
+    <link rel="stylesheet" href="style_.css">
+</head>
+<body>
+    <header>
+        <h1>Database Operations</h1>
+        <input type="button" value="Test Connection" class="button" onclick="testConnection()">
+    </header>
+    <div class="themeChange">
+        <button id="darken">
+                <span><p><img src="light-mode (1).png" alt="light/dark"></p></span>
+        </button>
+    </div>
+    <div class="container">
+        <form id="dbForm" class="dbForm">
+            <div class="form-group">
+                <label for="host">Host:</label>
+                <input type="text" id="host" name="host" placeholder="Host" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="User" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <label for="database">Database Name:</label>
+                <input type="text" id="database" name="database" placeholder="Database" required>
+            </div>
+            <div class="dbMethods">
+                <input type="button" value="Create Database" onclick="createDatabase()" class="button">
+                <input type="button" value="Show Tables" onclick="showTables()" class="button">
+                <input type="button" value="Delete Database" onclick="showConfirmation()" class="button">
+            </div><br>
+            <div class="form-group">
+                <label for="table">Table Name:</label>
+                <input type="text" id="table" name="table" placeholder="Table" required>
+            </div>
+            <div class="form-group">
+                <label for="pk">Primary Key Name:</label>
+                <input type="text" id="pk" name="pk" placeholder="Primary Key Column" required>
+            </div>
+            <div class="tabMethods">
+                <input type="button" value="Create Table" onclick="createTable()" class="button">
+                <input type="button" value="Read from Table" onclick="readTable()" class="button">
+                <input type="button" value="Show Table Columns" onclick="showColumns()" class="button">
+                <input type="button" value="Add or Modify Column(s)" onclick="addColumns()" class="button">
+                <input type="button" value="Delete Columns from Table" onclick="deleteColumnsQ()" class="button">
+                <input type="button" value="Delete Table Foreign Keys" onclick="getForeignKeysModal()" class="button">
+                <input type="button" value="Delete Table" onclick="showConfirmationTab()" class="button"><br>
+                <div id="addColumnsQ" class="modal">
+                    <div class="modal-content">
+                        <h2>Choose an option</h2>
+                        <input type="button" onclick="changeColumnsQ()" value="Change Columns" class="button">
+                        <input type="button" onclick="addNewColumnQ()" value="Add New Column" class="button">
+                        <input type="button" onclick="closeDialog()" value="Close" class="button" class="button">
+                    </div>
+                </div>
+                <div id="changeColumnsQ" class="modal">
+                    <div class="modal-content">
+                        <header>
+                            <h2>Change Existing Columns</h2>
+                        </header>
+                        <br>
+                        <label for="columnName">Column Name:</label>
+                        <input type="text" id="columnName" required placeholder="Column Name"><br><br>
+                        <label for="useDefaultDesc">Use Original Description?</label>
+                        <input type="checkbox" id="useDefaultDesc" checked><br><br>
+                        <label for="description">Description:</label>
+                        <input type="text" placeholder="For New Description" id="description" required>
+                        <br><br>
+                        <label for="makeForeignKey">Make Foreign Key?</label>
+                        <input type="checkbox" id="makeForeignKey"><br><br>
+                        <label for="referencedColumn">Referenced Column:</label>
+                        <input type="text" name="referencedColumn" id="referencedColumn" required placeholder="Referenced Column Name"><br><br>
+                        <label for="referencedTable">Referenced Table:</label>
+                        <input type="text" name="referencedTable" id="referencedTable" required placeholder="Referenced Table Name"><br><br>
+                        <label for="position">Position:</label>
+                        <select id="position">
+                            <option value="ORIGINAL">As it was</option>
+                            <option value="FIRST">First</option>
+                            <option value="AFTER">After</option>
+                        </select><br>
+                        <input type="text" id="afterColumn" placeholder="After This Column" required><br><br>
+                        <label for="renameColumn">Rename Column?</label>
+                        <input type="checkbox" id="renameColumn"><br>
+                        <input type="text" name="changedName" placeholder="New Column Name" id="changedName" required><br>
+                        <div id="responseChangeCol" class="scrollable"><label for="response">Response Box</label></div>
+                        <input type="button" onclick="changeColumns()" value="OK" class="button">
+                        <input type="button" onclick="closeDialogC()" value="Close" class="button">
+                    </div>
+                </div>
+                <div id="addNewColumnQ" class="modal">
+                    <div class="modal-content">
+                        <header>
+                            <h2>Add New Column</h2>
+                        </header>
+                        <br>
+                        <label for="newColumnName">Column Name:</label>
+                        <input type="text" id="newColumnName" required placeholder="New Column Name"><br><br>
+                        <label for="useDefaultNewDesc">Use Default? (VARCHAR(255) Null)</label>
+                        <input type="checkbox" id="useDefaultNewDesc" checked><br><br>
+                        <label for="newColumnDescription">Description:</label>
+                        <input type="text" id="newColumnDescription" placeholder="For New Description" required><br><br>
+                        <label for="makeNewColumnForeignKey">Make Foreign Key?</label>
+                        <input type="checkbox" id="makeNewColumnForeignKey"><br><br>
+                        <label for="referencedColumnAdd">Referenced Column:</label>
+                        <input type="text" name="referencedColumnAdd" id="referencedColumnAdd" required placeholder="Referenced Column Name"><br><br>
+                        <label for="referencedTableAdd">Referenced Table:</label>
+                        <input type="text" name="referencedTableAdd" id="referencedTableAdd" required placeholder="Referenced Table Name"><br><br>
+                        <label for="newColumnPosition">Position:</label>
+                        <select id="newColumnPosition">
+                            <option value="LAST">Last</option>
+                            <option value="FIRST">First</option>
+                            <option value="AFTER">After</option>
+                        </select><br>
+                        <input type="text" id="newColumnAfter" placeholder="After This Column" required>
+                        <div id="responseAddNewCol" class="scrollable"><label for="response">Response Box</label></div>
+                        <input type="button" onclick="addNewColumn()" value="OK" class="button">
+                        <input type="button" onclick="closeDialogA()" value="Close" class="button">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <!-- div for response/output -->
+            <div class="form-group">
+                <div id="response" class="scrollable"><label for="response">Response Box</label></div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="primaryKeys">Primary Keys:</label>
+                <textarea id="primaryKeys" name="primaryKeys" placeholder="(Enter each primary key on a new line.)" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="dataColumnNames">Column Names:</label>
+                <textarea id="dataColumnNames" name="dataColumnNames" placeholder="(Separate column names by commas if more than one.)" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="dataColumnValues">Cell Values:</label>
+                <textarea id="dataColumnValues" name="dataColumnValues" placeholder="(Enter each record on a new line and separate entries for the same row by commas.)" required></textarea>
+            </div>
+            <div class="dataMethods">
+                <input type="button" value="Add Records" onclick="addRecords()" class="button">
+                <input type="button" value="Display Keys" onclick="displayKeys()" class="button">
+                <input type="button" value="Display Records" onclick="displayRecords()" class="button">
+                <input type="button" value="Search Records" onclick="searchRecordsQ()" class="button">
+                <input type="button" value="Execute Query" onclick="executeQueryQ()" class="button">
+                <input type="button" value="Perform Joins" onclick="performJoinQ()" class="button">
+                <input type="button" value="Delete Rows" onclick="deleteRowsQ()" class="button">
+                <input type="button" value="Delete Records" onclick="deleteRecordsQ()" class="button">
+                <input type="button" value="Update Records" onclick="updateRecords()" class="button">
+                <!-- modal for search records method-->
+                <div id="searchRecordsQ" class="modal">
+                    <div class="modal-content">
+                        <header>
+                            <h2>Search Records</h2>
+                        </header>
+                        <br>
+                        <p>To search through all columns, leave the Column Name blank.</p>
+                        <br>
+                        <label for="searchColumnName">Column Name:</label>
+                        <input type="text" id="searchColumnName" required placeholder="Search through this particular column"><br><br>
+                        <label for="searchOptions">Options:</label>
+                        <select id="searchOptions">
+                            <option value="starts">STARTS WITH</option>
+                            <option value="ends">ENDS WITH</option>
+                            <option value="contains">CONTAINS</option>
+                            <option value="notContains">DOES NOT CONTAIN</option>
+                        </select><br><br>
+                        <label for="searchChar">Character for Search Operation:</label>
+                        <input type="text" id="searchChar" required placeholder="Search using this character">
+                        <br>
+                        <div id="searchRecordsResponse" class="scrollable"><label for="response">Response Box</label></div>
+                        <input type="button" onclick="searchRecords()" value="OK" class="button">
+                        <input type="button" onclick="closeSearchRecordsQ()" value="Close" class="button">
+                    </div>
+                </div>
+                <!-- modal for execute query method-->
+                <div id="executeQueryQ" class="modal">
+                    <div class="modal-content">
+                        <header>
+                            <h2>Query Operations</h2>
+                        </header>
+                        <br>
+                        <label for="queryOptions">Options:</label>
+                        <select id="queryOptions">
+                            <option value="concat">CONCATENATE</option>
+                            <option value="distinct">DISTINCT</option>
+                            <option value="range">RANGE</option>
+                        </select><br><br>
+                        <div id="forConcat">
+                            <h3>FOR CONCATENTE</h3><br>
+                            <label for="columnsToConcat">Columns to Concatenate:</label>
+                            <input type="text" id="columnsToConcat" required placeholder="Separate by commas if more than one"><br><br>
+                            <label for="separatorChar">Separator Character:</label>
+                            <input type="text" id="separatorChar" required placeholder="Enter the separator character (e.g. ' - ', ' , '). It is space by default">
+                            <br>
+                            <label for="concatColumnName">Name for Concatenated Column:</label>
+                            <input type="text" id="concatColumnName" required placeholder="Enter the name for the concatenated column"><br>
+                            <label for="displayColumns">Other Columns to display:</label>
+                            <input type="text" id="displayColumns" required placeholder="Separate by commas (leave empty for none)">
+                        </div>
+                        <br>
+                        <div id="forDistint">
+                            <h3>FOR DISTINCT</h3><br>
+                            <label for="columnsToConcat">Columns to Get Distinct Results:</label>
+                            <input type="text" id="columnsToDistinct" required placeholder="Separate by commas if more than one">
+                        </div>
+                        <br>
+                        <div id="forRange">
+                            <h3>FOR RANGE</h3><br>
+                            <label for="columnToRange">Column for the Range:</label>
+                            <input type="text" id="columnToRange" required placeholder="Enter the column name for the range"><br><br>
+                            <label for="lowerBound">Lower Bound:</label>
+                            <input type="number" id="lowerBound" required placeholder="Enter the lower bound">
+                            <br>
+                            <br>
+                            <label for="upperBound">Upper Bound:</label>
+                            <input type="number" id="upperBound" required placeholder="Enter the upper bound">
+                            <br>
+                        </div>
+                        <br>
+                        <div id="executeQueryResponse" class="scrollable"><label for="response">Response Box</label></div>
+                        <input type="button" onclick="executeQuery()" value="OK" class="button">
+                        <input type="button" onclick="closeExecuteQueryQ()" value="Close" class="button">
+                    </div>
+                </div>
+
+                <!-- modal for perform join method-->
+                <div id="performJoinQ" class="modal">
+                    <div class="modal-content">
+                        <header>
+                            <h2>Join Operations</h2>
+                        </header>
+                        <br>
+                        <div id="joinOperations">
+                            <p>Join Operations require join conditions which can be extremely sensitive. Ensure you know what you're doing and you enter the right data. For multiple entries, data must align line-by-line for each textbox</p><br><br>
+                            <label for="numTablesToJoin">Number of Tables:</label>
+                            <input type="number" id="numTablesToJoin" required min="2" placeholder="Enter the number of tables you want to join."><br><br>
+                            <label for="tablesToJoin">Tables to Join:</label>
+                            <textarea name="tablesToJoin" id="tablesToJoin" placeholder="Enter table names on a new line or separate by commas or spaces."></textarea>
+                            <br>
+                            <label for="joinType">Type of Join:</label>
+                            <textarea name="joinType" id="joinType" placeholder="Enter join types (inner/right/left/full-outer) on a new line or separate by commas or spaces."></textarea>
+                            <br><br>
+                            <label for="primaryKeyColumns">Primary Key Columns:</label>
+                            <textarea name="primaryKeyColumns" id="primaryKeyColumns" placeholder="Enter primary key column names on a new line or separate by commas or spaces."></textarea><br>
+                            <label for="foreignKeyColumns">Foreign Key Columns:</label>
+                            <textarea name="foreignKeyColumns" id="foreignKeyColumns" placeholder="Enter foreign key column names on a new line or separate by commas or spaces."></textarea>
+                            <br><br>
+                            <label for="joinColumnQ">Use General Join Column Instead?</label>
+                            <input type="checkbox" name="joinColumnQ" id="joinColumnQ"><br>
+                            <textarea name="joinColumns" id="joinColumns" placeholder="Enter join column names on a new line or separate by commas or spaces."></textarea>
+                        </div>
+                        <br>
+                        <div id="performJoinResponse" class="scrollable"><label for="response">Response Box</label></div>
+                        <input type="button" onclick="performJoin()" value="OK" class="button">
+                        <input type="button" onclick="closePerformJoinQ()" value="Close" class="button">
+                    </div>
+                </div>
+
+            </div>
+            
+        </form>
+            <!-- Modal for Database Deletion Confirmation -->
+        <div id="confirmation-modal" class="modal">
+            <div class="modal-content">
+                <p>WARNING: Deleting the database will permanently remove all data and cannot be undone.</p>
+                <button id="confirm-button" onclick="deleteDatabase()" class="button">DELETE</button>
+                <button id="cancel-button" onclick="hideConfirmation()" class="button">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Modal for Table Deletion Confirmation -->
+        <div id="delTabModal" class="modal">
+            <div class="modal-content">
+                <p>WARNING: Deleting the table will permanently remove all data and cannot be undone.</p>
+                <button id="confirm-button-tab" onclick="deleteTable()" class="button">DELETE</button>
+                <button id="cancel-button-tab" onclick="hideConfirmationTab()" class="button">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Modal for Column Deletion-->
+        <div id="deleteColumnsQ" class="modal">
+            <div class="modal-content">
+                <label for="columnNames">Column Name(s):</label><br><br>
+                <textarea id="columnNames" name="columnNames" placeholder="(If more than one, enter each column name on a new line or separate by spaces or commas)" required></textarea>
+                <div id="colDel" class="scrollable"><label for="response">Response Box</label></div>
+                
+                <button id="confirm-button-col" onclick="deleteColumnsConfirmation()" class="button">OK</button>
+                <button id="cancel-button-col" onclick="closeDeleteColumnsDialog()" class="button">Cancel</button>
+            </div>
+        </div>
+        <!-- Modal for Column Deletion Confirmation -->
+        <div id="deleteColumnsModal" class="modal">
+            <div class="modal-content">
+                <p>WARNING: Deleting the column(s) will permanently remove all data and cannot be undone.</p>
+                <button id="final-confirm-button-col" onclick="deleteColumns()" class="button">DELETE</button>
+                <button id="final-cancel-button-col" onclick="hideConfirmationCol()" class="button">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Modal for Foreign Key Deletion-->
+        <div id="deleteFKQ" class="modal">
+            <div class="modal-content">
+                <h3>Dropping Key Constraints</h3>
+                <p>Deletion of key constraints could jeopardise the integrity of the database. Proceed with caution.</p>
+                <p>(Do not select any primary keys!)</p>
+                <button id="getFKs" onclick="getForeignKeys()" class="button">Get Foreign Keys</button>
+                <div id="FK_form" class="scrollable"><label for="response">Response Box</label></div><br>
+                <textarea name="foreignKeyConstraints" id="foreignKeyConstraints" placeholder="Enter the index(es) of the Foreign Keys to Delete" required></textarea>
+                <button id="confirm-button-fk" onclick="deleteForeignKeysConfModal()" class="button">OK</button>
+                <button id="cancel-button-fk" onclick="closeForeignKeysModal()" class="button">Cancel</button>
+            </div>
+        </div>
+        <!-- Modal for Foreign Key Deletion Confirmation -->
+        <div id="deleteForeignKeysConfirmation" class="modal">
+            <div class="modal-content">
+                <p>WARNING: Deleting the column(s) will permanently remove all data and cannot be undone.</p>
+                <p>Click on "DROP" to drop constraints ONLY.</p>
+                <p>Click on "DELETE" to permanently delete column.</p>
+                <div id="FK_final" class="scrollable"><label for="response">Response Box</label></div>
+                <button id="final-confirm-button-fk" onclick="deleteForeignKeyConstraints()" class="button">DROP</button>
+                <button id="final-confirm-button-fk-delete" onclick="deleteForeignKeys()" class="button">DELETE</button>
+                <button id="final-cancel-button-fk" onclick="hideConfirmationFK()" class="button">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Modal for Rows Deletion Confirmation -->
+        <div id="delRowModal" class="modal">
+            <div class="modal-content">
+                <p>WARNING: Are you sure you want to delete the record(s)?</p><br>
+                <p>Deleting the rows will permanently remove all data and cannot be undone.</p>
+                <button id="confirm-button-tab" onclick="deleteRows()" class="button">DELETE</button>
+                <button id="cancel-button-tab" onclick="closeDeleteRowsQ()" class="button">Cancel</button>
+            </div>
+        </div>
+        <!-- Modal for Records Deletion -->
+        <div id="delRecordsModal" class="modal">
+            <div class="modal-content">
+                <header>
+                    <h2>Delete Records</h2>
+                </header><br>
+                <h3>ONLY CHECK ONE AT A TIME!</h3>
+                <br>
+                <label for="pkRange">Delete Records by Primary Key Range?</label>
+                <input type="checkbox" name="pkRange" id="pkRange"><br><br>
+                <label for="startingPK">Starting Primary Key Value:</label>
+                <input type="number" name="startingPK" id="startingPK" min="0" placeholder="Enter the starting primary key value.">
+                <br><br>
+                <label for="endingPK">Ending Primary Key Value:</label>
+                <input type="number" name="endingPK" id="endingPK" min="1" placeholder="Enter the ending primary key value."><br>
+                <br>
+                <label for="specificColumnByPKRange">Delete Records in a Specific Column by Primary Key Range?</label>
+                <input type="checkbox" name="specificColumnByPKRange" id="specificColumnByPKRange">
+                <br><br>
+                <label for="specificColumn">Specific Column:</label>
+                <input type="text" name="specificColumn" id="specificColumn" placeholder="Enter the name of the specific column.">
+                <br><br>
+                <label for="allInSpecificColumn">Delete ALL Records in a Specific Column?</label>
+                <input type="checkbox" name="allInSpecificColumn" id="allInSpecificColumn">
+                <br><br>
+                <label for="allInTable">Delete ALL Records in Table?</label>
+                <input type="checkbox" name="allInTable" id="allInTable"><br><br>
+                <div id="recordDel" class="scrollable"><label for="response">Response Box</label></div>
+                <br>
+                <button id="confirm-button-tab" onclick="deleteRecordsConfirm()" class="button">OK</button>
+                <button id="cancel-button-tab" onclick="closeDeleteRecordsQ()" class="button">Cancel</button>
+            </div>
+        </div>
+        <!-- Modal for Records Deletion Confirmation -->
+        <div id="delRecordsConfirm" class="modal">
+            <div class="modal-content">
+                <p>WARNING: Are you sure you want to delete the record(s)?</p><br>
+                <p>Deleting the records will permanently remove all data and cannot be undone.</p>
+                <button id="confirm-button-tab" onclick="deleteRecords()" class="button">DELETE</button>
+                <button id="cancel-button-tab" onclick="closeDeleteRecordsConfQ()" class="button">Cancel</button>
+            </div>
+        </div>
+        <br><br>
+        <!--Dynamic Query box-->
+        <div class="dbForm">
+            <div id="dynamicQuery" class="form-group">
+                <header>
+                    <h3>Dynamic Query</h3>
+                </header>
+                <br>
+                <label style="text-align: center;">
+                    <p>This is for entering specific MySQL commands directly.</p>
+                    <p>Ensure you know what you're doing!</p>
+                </label>
+                <br>
+                <textarea name="dynamicQueryBox" id="dynamicQueryBox" cols="30" rows="10" placeholder="Enter MySQL queries here!"></textarea>
+                <div id="dynamicQueryResponse" class="scrollable"><label for="dynamicQueryResponse">Response Box</label></div>
+                <br>
+                <div class="dbMethods">
+                    <input type="button" value="EXECUTE" class="button" onclick="executeDynamicQ()">
+                    <input type="button" value="CLEAR" class="button" onclick="clearDynamic()">
+                </div>
+            </div>
+        </div>
+        <!-- Modal for Dynamic Query Confirmation -->
+        <div id="dynamicQueryConfirm" class="modal">
+            <div class="modal-content">
+                <p>WARNING: Are you sure you want go through with the command?</p><br>
+                <p>The execution cannot be undone!</p>
+                <button id="confirm-query-tab" onclick="queryDynamic()" class="button">EXECUTE</button>
+                <button id="cancel-query-tab" onclick="closeDynamicQueryConfQ()" class="button">Cancel</button>
+            </div>
+        </div>
+        <a id="toTop" href="#"><img src="up-arrow.png" alt="To The Top!"></a>
+    </div>
+
+    
+
+
+    <script src="dbMain.js"></script>
+    <script src="tab_main.js"></script>
+    <script src="dataMain.js"></script>
+    <script src="dyquery.js"></script>
+    <script src="theme.js"></script>
+    
+</body>
+</html>
