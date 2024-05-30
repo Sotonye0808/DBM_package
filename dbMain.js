@@ -50,7 +50,7 @@ function executeAction(action) {
     formData.append("database", database);
     formData.append("isConfirmed", 'y');
 
-    fetch("/Sotonye_DBM_project/Python_works/DBM_package/cgi-bin/dbCRUD.py", {
+    fetch("/cgi-bin/dbCRUD.py", {
         method: "POST",
         body: formData
     })
